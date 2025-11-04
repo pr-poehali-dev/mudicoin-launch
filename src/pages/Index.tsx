@@ -78,64 +78,96 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="mb-12 relative" style={{ perspective: '1000px' }}>
+        <div className="mb-12 relative" style={{ perspective: '1200px' }}>
           <div
-            className="w-48 h-48 md:w-64 md:h-64 relative"
+            className="w-48 h-48 md:w-64 md:h-64 relative mx-auto"
             style={{
               transformStyle: 'preserve-3d',
-              transform: `rotateY(${rotation}deg)`,
+              transform: `rotateX(20deg) rotateY(${rotation}deg)`,
             }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
-                {[...Array(8)].map((_, layerIndex) => {
-                  const radius = 90;
-                  const pixelSize = 8;
-                  const pixels: JSX.Element[] = [];
+            {[...Array(12)].map((_, zIndex) => {
+              const voxels: JSX.Element[] = [];
+              const radius = 80;
+              const voxelSize = 8;
+              const centerZ = zIndex * 4 - 24;
+              
+              for (let angle = 0; angle < 360; angle += 15) {
+                const distance = radius - Math.abs(centerZ) * 0.5;
+                if (distance > 20) {
+                  const x = distance * Math.cos((angle * Math.PI) / 180);
+                  const y = distance * Math.sin((angle * Math.PI) / 180);
                   
-                  for (let angle = 0; angle < 360; angle += 10) {
-                    const x = radius * Math.cos((angle * Math.PI) / 180);
-                    const y = radius * Math.sin((angle * Math.PI) / 180);
-                    
-                    pixels.push(
+                  const brightness = 1 - Math.abs(centerZ) / 60;
+                  
+                  voxels.push(
+                    <div
+                      key={`voxel-${zIndex}-${angle}`}
+                      className="absolute"
+                      style={{
+                        width: `${voxelSize}px`,
+                        height: `${voxelSize}px`,
+                        left: `calc(50% + ${x}px)`,
+                        top: `calc(50% + ${y}px)`,
+                        transform: `translateZ(${centerZ}px)`,
+                        backgroundColor: '#00FF41',
+                        opacity: brightness,
+                        boxShadow: `0 0 ${10 * brightness}px rgba(0, 255, 65, ${0.8 * brightness})`,
+                      }}
+                    />
+                  );
+                }
+              }
+              
+              return (
+                <div
+                  key={`layer-${zIndex}`}
+                  className="absolute inset-0"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  {voxels}
+                </div>
+              );
+            })}
+            
+            <div 
+              className="absolute inset-0 flex items-center justify-center"
+              style={{
+                transform: 'translateZ(0px)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              {[
+                [1,1,1,0,0,0,1,1,1],
+                [1,1,1,1,0,1,1,1,1],
+                [1,1,1,1,0,1,1,1,1],
+                [1,0,1,1,0,1,1,0,1],
+                [1,0,0,1,0,1,0,0,1],
+                [1,0,0,1,0,1,0,0,1],
+                [1,0,0,0,0,0,0,0,1],
+              ].map((row, rowIndex) => (
+                <div key={`m-row-${rowIndex}`} className="absolute" style={{ top: `${rowIndex * 8 + 40}px`, left: '50%', transform: 'translateX(-50%)' }}>
+                  {row.map((pixel, colIndex) => 
+                    pixel === 1 ? (
                       <div
-                        key={`${layerIndex}-${angle}`}
-                        className="absolute bg-primary"
+                        key={`m-pixel-${rowIndex}-${colIndex}`}
+                        className="inline-block"
                         style={{
-                          width: `${pixelSize}px`,
-                          height: `${pixelSize}px`,
-                          left: `calc(50% + ${x}px - ${pixelSize / 2}px)`,
-                          top: `calc(50% + ${y}px - ${pixelSize / 2}px)`,
-                          boxShadow: '0 0 8px rgba(0, 255, 65, 0.6)',
+                          width: '8px',
+                          height: '8px',
+                          backgroundColor: '#00FF41',
+                          boxShadow: '0 0 15px rgba(0, 255, 65, 1)',
+                          transform: 'translateZ(30px)',
                         }}
                       />
-                    );
-                  }
-                  
-                  return (
-                    <div
-                      key={layerIndex}
-                      className="absolute inset-0"
-                      style={{
-                        transform: `translateZ(${layerIndex * 6}px)`,
-                        opacity: 1 - layerIndex * 0.1,
-                      }}
-                    >
-                      {pixels}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div 
-                          className="text-5xl md:text-7xl font-bold text-primary pixel-text"
-                          style={{
-                            textShadow: '0 0 20px rgba(0, 255, 65, 0.8)',
-                          }}
-                        >
-                          M
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    ) : (
+                      <div key={`m-space-${rowIndex}-${colIndex}`} className="inline-block" style={{ width: '8px', height: '8px' }} />
+                    )
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
