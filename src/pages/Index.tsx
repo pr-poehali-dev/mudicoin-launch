@@ -83,27 +83,58 @@ const Index = () => {
             className="w-48 h-48 md:w-64 md:h-64 relative"
             style={{
               transformStyle: 'preserve-3d',
-              transform: `rotateY(${rotation}deg) rotateX(15deg)`,
+              transform: `rotateY(${rotation}deg)`,
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full">
-                {[...Array(5)].map((_, layerIndex) => (
-                  <div
-                    key={layerIndex}
-                    className="absolute inset-0 border-4 border-primary"
-                    style={{
-                      transform: `translateZ(${layerIndex * 8}px)`,
-                      opacity: 1 - layerIndex * 0.15,
-                    }}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-6xl md:text-8xl font-bold text-primary pixel-text">
-                        M
+                {[...Array(8)].map((_, layerIndex) => {
+                  const radius = 90;
+                  const pixelSize = 8;
+                  const pixels: JSX.Element[] = [];
+                  
+                  for (let angle = 0; angle < 360; angle += 10) {
+                    const x = radius * Math.cos((angle * Math.PI) / 180);
+                    const y = radius * Math.sin((angle * Math.PI) / 180);
+                    
+                    pixels.push(
+                      <div
+                        key={`${layerIndex}-${angle}`}
+                        className="absolute bg-primary"
+                        style={{
+                          width: `${pixelSize}px`,
+                          height: `${pixelSize}px`,
+                          left: `calc(50% + ${x}px - ${pixelSize / 2}px)`,
+                          top: `calc(50% + ${y}px - ${pixelSize / 2}px)`,
+                          boxShadow: '0 0 8px rgba(0, 255, 65, 0.6)',
+                        }}
+                      />
+                    );
+                  }
+                  
+                  return (
+                    <div
+                      key={layerIndex}
+                      className="absolute inset-0"
+                      style={{
+                        transform: `translateZ(${layerIndex * 6}px)`,
+                        opacity: 1 - layerIndex * 0.1,
+                      }}
+                    >
+                      {pixels}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div 
+                          className="text-5xl md:text-7xl font-bold text-primary pixel-text"
+                          style={{
+                            textShadow: '0 0 20px rgba(0, 255, 65, 0.8)',
+                          }}
+                        >
+                          M
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
