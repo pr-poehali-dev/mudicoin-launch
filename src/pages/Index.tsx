@@ -1,248 +1,223 @@
-import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import Icon from '@/components/ui/icon';
 
 const Index = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const columns = Math.floor(canvas.width / 20);
-    const drops: number[] = Array(columns).fill(0);
-
-    const matrixChars = '01';
-
-    const drawMatrix = () => {
-      ctx.fillStyle = 'rgba(10, 14, 10, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#00FF41';
-      ctx.font = '15px "Press Start 2P"';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-        ctx.fillText(text, i * 20, drops[i] * 20);
-
-        if (drops[i] * 20 > canvas.height) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    };
-
-    const interval = setInterval(drawMatrix, 50);
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prev) => (prev + 2) % 360);
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="relative min-h-screen bg-background overflow-hidden">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-0"
-      />
-
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="mb-8 text-center animate-fade-in">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl text-primary mb-2 pixel-text tracking-wider">
-            MUDICOIN
-          </h1>
-          <p className="text-xs md:text-sm text-primary/80 pixel-text mt-4">
-            8-BIT PIXEL MEMECOIN
-          </p>
+    <div className="min-h-screen bg-background text-foreground">
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-accent rounded-full" />
+            <span className="text-xl font-bold">MUDICOIN</span>
+          </div>
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+            <a href="#tokenomics" className="text-muted-foreground hover:text-foreground transition-colors">Tokenomics</a>
+            <a href="#roadmap" className="text-muted-foreground hover:text-foreground transition-colors">Roadmap</a>
+            <Button className="bg-accent hover:bg-accent/90">Buy Now</Button>
+          </div>
         </div>
+      </nav>
 
-        <div className="mb-12 relative" style={{ perspective: '1200px' }}>
-          <div
-            className="w-48 h-48 md:w-64 md:h-64 relative mx-auto"
-            style={{
-              transformStyle: 'preserve-3d',
-              transform: `rotateX(20deg) rotateY(${rotation}deg)`,
-            }}
-          >
-            {[...Array(12)].map((_, zIndex) => {
-              const voxels: JSX.Element[] = [];
-              const radius = 80;
-              const voxelSize = 8;
-              const centerZ = zIndex * 4 - 24;
-              
-              for (let angle = 0; angle < 360; angle += 15) {
-                const distance = radius - Math.abs(centerZ) * 0.5;
-                if (distance > 20) {
-                  const x = distance * Math.cos((angle * Math.PI) / 180);
-                  const y = distance * Math.sin((angle * Math.PI) / 180);
-                  
-                  const brightness = 1 - Math.abs(centerZ) / 60;
-                  
-                  voxels.push(
-                    <div
-                      key={`voxel-${zIndex}-${angle}`}
-                      className="absolute"
-                      style={{
-                        width: `${voxelSize}px`,
-                        height: `${voxelSize}px`,
-                        left: `calc(50% + ${x}px)`,
-                        top: `calc(50% + ${y}px)`,
-                        transform: `translateZ(${centerZ}px)`,
-                        backgroundColor: '#00FF41',
-                        opacity: brightness,
-                        boxShadow: `0 0 ${10 * brightness}px rgba(0, 255, 65, ${0.8 * brightness})`,
-                      }}
-                    />
-                  );
-                }
-              }
-              
-              return (
-                <div
-                  key={`layer-${zIndex}`}
-                  className="absolute inset-0"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  {voxels}
-                </div>
-              );
-            })}
-            
-            <div 
-              className="absolute inset-0 flex items-center justify-center"
-              style={{
-                transform: 'translateZ(0px)',
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              {[
-                [1,1,1,0,0,0,1,1,1],
-                [1,1,1,1,0,1,1,1,1],
-                [1,1,1,1,0,1,1,1,1],
-                [1,0,1,1,0,1,1,0,1],
-                [1,0,0,1,0,1,0,0,1],
-                [1,0,0,1,0,1,0,0,1],
-                [1,0,0,0,0,0,0,0,1],
-              ].map((row, rowIndex) => (
-                <div key={`m-row-${rowIndex}`} className="absolute" style={{ top: `${rowIndex * 8 + 40}px`, left: '50%', transform: 'translateX(-50%)' }}>
-                  {row.map((pixel, colIndex) => 
-                    pixel === 1 ? (
-                      <div
-                        key={`m-pixel-${rowIndex}-${colIndex}`}
-                        className="inline-block"
-                        style={{
-                          width: '8px',
-                          height: '8px',
-                          backgroundColor: '#00FF41',
-                          boxShadow: '0 0 15px rgba(0, 255, 65, 1)',
-                          transform: 'translateZ(30px)',
-                        }}
-                      />
-                    ) : (
-                      <div key={`m-space-${rowIndex}-${colIndex}`} className="inline-block" style={{ width: '8px', height: '8px' }} />
-                    )
-                  )}
-                </div>
-              ))}
+      <section className="pt-32 pb-20 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center space-y-8">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none">
+              ONE MUDI
+              <br />
+              <span className="text-muted-foreground">TO RULE</span>
+              <br />
+              THEM ALL
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+              The ultimate 8-bit memecoin bringing retro gaming culture to the blockchain
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-lg px-8 py-6">
+                Get Started
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+                Learn More
+              </Button>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-2 gap-4 md:gap-6 w-full max-w-2xl px-4">
-          <Button
-            className="pixel-button h-14 md:h-16 text-xs md:text-sm hover:scale-105 transition-transform"
-            variant="default"
-          >
-            CLAIM
-          </Button>
-          <Button
-            className="pixel-button h-14 md:h-16 text-xs md:text-sm hover:scale-105 transition-transform"
-            variant="default"
-          >
-            FARMING
-          </Button>
-          <Button
-            className="pixel-button h-14 md:h-16 text-xs md:text-sm hover:scale-105 transition-transform"
-            variant="default"
-          >
-            STAKELAND
-          </Button>
-          <Button
-            className="pixel-button h-14 md:h-16 text-xs md:text-sm hover:scale-105 transition-transform"
-            variant="default"
-          >
-            BUY
-          </Button>
+      <section className="py-20 px-6 bg-secondary/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
+              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
+                <Icon name="Coins" className="text-accent" size={24} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Fair Launch</h3>
+              <p className="text-muted-foreground">
+                100% community-owned with no pre-sale or team allocation
+              </p>
+            </Card>
+
+            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
+              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
+                <Icon name="Shield" className="text-accent" size={24} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Secure</h3>
+              <p className="text-muted-foreground">
+                Audited smart contracts with locked liquidity
+              </p>
+            </Card>
+
+            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
+              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
+                <Icon name="Zap" className="text-accent" size={24} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3">Fast</h3>
+              <p className="text-muted-foreground">
+                Lightning-fast transactions with minimal fees
+              </p>
+            </Card>
+          </div>
         </div>
+      </section>
 
-        <div className="mt-12 text-center">
-          <p className="text-[8px] md:text-xs text-primary/60 pixel-text">
-            &gt; ENTER THE MATRIX &lt;
+      <section id="tokenomics" className="py-20 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-5xl md:text-7xl font-black mb-16 text-center">
+            TOKENOMICS
+          </h2>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
+                <span className="text-xl font-semibold">Total Supply</span>
+                <span className="text-2xl font-bold">1,000,000,000</span>
+              </div>
+              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
+                <span className="text-xl font-semibold">Liquidity Pool</span>
+                <span className="text-2xl font-bold text-accent">80%</span>
+              </div>
+              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
+                <span className="text-xl font-semibold">Community Rewards</span>
+                <span className="text-2xl font-bold text-accent">15%</span>
+              </div>
+              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
+                <span className="text-xl font-semibold">Marketing</span>
+                <span className="text-2xl font-bold text-accent">5%</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-center">
+              <div className="relative w-64 h-64 md:w-80 md:h-80">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/40 to-accent/10 animate-pulse" />
+                <div className="absolute inset-8 rounded-full bg-background flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-5xl font-black mb-2">MUDI</div>
+                    <div className="text-muted-foreground">Token</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap" className="py-20 px-6 bg-secondary/30">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-5xl md:text-7xl font-black mb-16 text-center">
+            ROADMAP
+          </h2>
+          <div className="space-y-8">
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background font-bold">
+                  ✓
+                </div>
+                <div className="w-0.5 h-full bg-border mt-2" />
+              </div>
+              <div className="pb-8">
+                <h3 className="text-2xl font-bold mb-2">Phase 1: Launch</h3>
+                <p className="text-muted-foreground">Token launch, liquidity pool creation, and initial community building</p>
+              </div>
+            </div>
+
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background font-bold">
+                  2
+                </div>
+                <div className="w-0.5 h-full bg-border mt-2" />
+              </div>
+              <div className="pb-8">
+                <h3 className="text-2xl font-bold mb-2">Phase 2: Growth</h3>
+                <p className="text-muted-foreground">CEX listings, partnerships, and expanded marketing campaigns</p>
+              </div>
+            </div>
+
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full bg-accent/50 flex items-center justify-center text-background font-bold">
+                  3
+                </div>
+                <div className="w-0.5 h-full bg-border mt-2" />
+              </div>
+              <div className="pb-8">
+                <h3 className="text-2xl font-bold mb-2">Phase 3: Ecosystem</h3>
+                <p className="text-muted-foreground">NFT collection launch, staking platform, and community governance</p>
+              </div>
+            </div>
+
+            <div className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full bg-accent/50 flex items-center justify-center text-background font-bold">
+                  4
+                </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-2">Phase 4: Domination</h3>
+                <p className="text-muted-foreground">Global expansion, major partnerships, and metaverse integration</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-6">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-5xl md:text-7xl font-black mb-8">
+            JOIN THE<br />REVOLUTION
+          </h2>
+          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Be part of the community that's redefining memecoins
           </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+              <Icon name="Twitter" className="mr-2" size={20} />
+              Twitter
+            </Button>
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+              <Icon name="MessageCircle" className="mr-2" size={20} />
+              Telegram
+            </Button>
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+              <Icon name="Github" className="mr-2" size={20} />
+              GitHub
+            </Button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <style>{`
-        .pixel-text {
-          font-family: 'Press Start 2P', monospace;
-          text-shadow: 2px 2px 0px rgba(0, 255, 65, 0.5);
-          letter-spacing: 0.1em;
-        }
-
-        .pixel-button {
-          font-family: 'Press Start 2P', monospace;
-          border: 3px solid hsl(var(--primary));
-          box-shadow: 
-            0 0 10px rgba(0, 255, 65, 0.5),
-            inset 0 0 10px rgba(0, 255, 65, 0.2);
-          text-shadow: 0 0 5px rgba(0, 255, 65, 0.8);
-        }
-
-        .pixel-button:hover {
-          box-shadow: 
-            0 0 20px rgba(0, 255, 65, 0.8),
-            inset 0 0 20px rgba(0, 255, 65, 0.4);
-        }
-
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-      `}</style>
+      <footer className="py-12 px-6 border-t border-border">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-accent rounded-full" />
+              <span className="text-xl font-bold">MUDICOIN</span>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              © 2025 MUDICOIN. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
