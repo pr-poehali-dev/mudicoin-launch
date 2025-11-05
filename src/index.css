@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,35 +6,35 @@
 
 @layer base {
   :root {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
+    --background: 141 85% 3%;
+    --foreground: 141 100% 50%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 141 85% 5%;
+    --card-foreground: 141 100% 50%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 141 85% 5%;
+    --popover-foreground: 141 100% 50%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 7%;
+    --primary: 141 100% 50%;
+    --primary-foreground: 141 85% 3%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 141 100% 12%;
+    --secondary-foreground: 141 100% 50%;
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 141 85% 8%;
+    --muted-foreground: 141 60% 40%;
 
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 141 100% 50%;
+    --accent-foreground: 141 85% 3%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 40%;
+    --border: 141 100% 20%;
+    --input: 141 100% 20%;
+    --ring: 141 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 0rem;
 
     --sidebar-background: 141 85% 3%;
 
@@ -99,13 +99,11 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family:
-      "Inter",
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
+    font-family: "Press Start 2P", monospace;
+    -webkit-font-smoothing: none;
     -moz-osx-font-smoothing: grayscale;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
   }
 }

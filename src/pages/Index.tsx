@@ -1,117 +1,119 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import Icon from '@/components/ui/icon';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-accent rounded-full" />
-            <span className="text-xl font-bold">MUDICOIN</span>
+      <nav className="fixed top-0 w-full z-50 bg-background border-b-4 border-primary">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-primary" style={{ boxShadow: '0 0 10px rgba(0, 255, 65, 0.6)' }} />
+            <span className="text-sm md:text-base font-bold">MUDICOIN</span>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
-            <a href="#tokenomics" className="text-muted-foreground hover:text-foreground transition-colors">Tokenomics</a>
-            <a href="#roadmap" className="text-muted-foreground hover:text-foreground transition-colors">Roadmap</a>
-            <Button className="bg-accent hover:bg-accent/90">Buy Now</Button>
-          </div>
+          <Button className="text-[10px] md:text-xs px-4 py-2 bg-primary text-primary-foreground border-2 border-primary hover:bg-primary/90" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.4)' }}>
+            BUY
+          </Button>
         </div>
       </nav>
 
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-6xl">
+      <section className="pt-32 pb-16 px-4">
+        <div className="container mx-auto max-w-4xl">
           <div className="text-center space-y-8">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none">
-              ONE MUDI
+            <div className="relative inline-block">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
+                ONE MUDI
+                <br />
+                TO RULE
+                <br />
+                THEM ALL
+              </h1>
+            </div>
+            <div className="w-16 h-1 bg-primary mx-auto" />
+            <p className="text-[10px] md:text-xs text-primary/80 max-w-xl mx-auto leading-relaxed">
+              8-BIT PIXEL MEMECOIN
               <br />
-              <span className="text-muted-foreground">TO RULE</span>
-              <br />
-              THEM ALL
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-              The ultimate 8-bit memecoin bringing retro gaming culture to the blockchain
+              RETRO GAMING BLOCKCHAIN
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-lg px-8 py-6">
-                Get Started
+              <Button size="lg" className="text-xs px-8 py-6 bg-primary text-primary-foreground border-4 border-primary hover:bg-primary/90" style={{ boxShadow: '6px 6px 0px rgba(0, 255, 65, 0.4)' }}>
+                START
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                Learn More
+              <Button size="lg" variant="outline" className="text-xs px-8 py-6 border-4 border-primary bg-background hover:bg-primary/10" style={{ boxShadow: '6px 6px 0px rgba(0, 255, 65, 0.4)' }}>
+                INFO
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-secondary/30">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
-              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
-                <Icon name="Coins" className="text-accent" size={24} />
-              </div>
-              <h3 className="text-2xl font-bold mb-3">Fair Launch</h3>
-              <p className="text-muted-foreground">
-                100% community-owned with no pre-sale or team allocation
+      <section className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30">
+        <div className="container mx-auto max-w-5xl">
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="p-6 bg-card border-4 border-primary/50 hover:border-primary transition-colors" style={{ boxShadow: '8px 8px 0px rgba(0, 255, 65, 0.2)' }}>
+              <div className="w-12 h-12 bg-primary mb-4" style={{ boxShadow: '0 0 15px rgba(0, 255, 65, 0.6)' }} />
+              <h3 className="text-sm md:text-base font-bold mb-3">FAIR</h3>
+              <p className="text-[8px] md:text-[10px] text-primary/70 leading-relaxed">
+                100% COMMUNITY
+                <br />
+                NO PRESALE
               </p>
             </Card>
 
-            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
-              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
-                <Icon name="Shield" className="text-accent" size={24} />
-              </div>
-              <h3 className="text-2xl font-bold mb-3">Secure</h3>
-              <p className="text-muted-foreground">
-                Audited smart contracts with locked liquidity
+            <Card className="p-6 bg-card border-4 border-primary/50 hover:border-primary transition-colors" style={{ boxShadow: '8px 8px 0px rgba(0, 255, 65, 0.2)' }}>
+              <div className="w-12 h-12 bg-primary mb-4" style={{ boxShadow: '0 0 15px rgba(0, 255, 65, 0.6)' }} />
+              <h3 className="text-sm md:text-base font-bold mb-3">SECURE</h3>
+              <p className="text-[8px] md:text-[10px] text-primary/70 leading-relaxed">
+                AUDITED CONTRACT
+                <br />
+                LOCKED LIQUIDITY
               </p>
             </Card>
 
-            <Card className="p-8 bg-card border-border hover:border-accent transition-colors">
-              <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mb-4">
-                <Icon name="Zap" className="text-accent" size={24} />
-              </div>
-              <h3 className="text-2xl font-bold mb-3">Fast</h3>
-              <p className="text-muted-foreground">
-                Lightning-fast transactions with minimal fees
+            <Card className="p-6 bg-card border-4 border-primary/50 hover:border-primary transition-colors" style={{ boxShadow: '8px 8px 0px rgba(0, 255, 65, 0.2)' }}>
+              <div className="w-12 h-12 bg-primary mb-4" style={{ boxShadow: '0 0 15px rgba(0, 255, 65, 0.6)' }} />
+              <h3 className="text-sm md:text-base font-bold mb-3">FAST</h3>
+              <p className="text-[8px] md:text-[10px] text-primary/70 leading-relaxed">
+                INSTANT TX
+                <br />
+                LOW FEES
               </p>
             </Card>
           </div>
         </div>
       </section>
 
-      <section id="tokenomics" className="py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-5xl md:text-7xl font-black mb-16 text-center">
+      <section id="tokenomics" className="py-16 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
             TOKENOMICS
           </h2>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
-                <span className="text-xl font-semibold">Total Supply</span>
-                <span className="text-2xl font-bold">1,000,000,000</span>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-4 bg-secondary border-4 border-primary/30" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.2)' }}>
+                <span className="text-[10px] md:text-xs font-semibold">SUPPLY</span>
+                <span className="text-xs md:text-sm font-bold">1B</span>
               </div>
-              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
-                <span className="text-xl font-semibold">Liquidity Pool</span>
-                <span className="text-2xl font-bold text-accent">80%</span>
+              <div className="flex justify-between items-center p-4 bg-secondary border-4 border-primary/30" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.2)' }}>
+                <span className="text-[10px] md:text-xs font-semibold">LP</span>
+                <span className="text-xs md:text-sm font-bold">80%</span>
               </div>
-              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
-                <span className="text-xl font-semibold">Community Rewards</span>
-                <span className="text-2xl font-bold text-accent">15%</span>
+              <div className="flex justify-between items-center p-4 bg-secondary border-4 border-primary/30" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.2)' }}>
+                <span className="text-[10px] md:text-xs font-semibold">REWARDS</span>
+                <span className="text-xs md:text-sm font-bold">15%</span>
               </div>
-              <div className="flex justify-between items-center p-6 bg-secondary rounded-lg">
-                <span className="text-xl font-semibold">Marketing</span>
-                <span className="text-2xl font-bold text-accent">5%</span>
+              <div className="flex justify-between items-center p-4 bg-secondary border-4 border-primary/30" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.2)' }}>
+                <span className="text-[10px] md:text-xs font-semibold">MARKETING</span>
+                <span className="text-xs md:text-sm font-bold">5%</span>
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <div className="relative w-64 h-64 md:w-80 md:h-80">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-accent/40 to-accent/10 animate-pulse" />
-                <div className="absolute inset-8 rounded-full bg-background flex items-center justify-center">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 border-8 border-primary" style={{ boxShadow: '0 0 30px rgba(0, 255, 65, 0.4)' }}>
+                <div className="absolute inset-8 border-4 border-primary/50 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-5xl font-black mb-2">MUDI</div>
-                    <div className="text-muted-foreground">Token</div>
+                    <div className="text-2xl md:text-4xl font-bold mb-2" style={{ textShadow: '2px 2px 0px rgba(0, 255, 65, 0.5)' }}>
+                      MUDI
+                    </div>
+                    <div className="text-[8px] md:text-[10px] text-primary/70">TOKEN</div>
                   </div>
                 </div>
               </div>
@@ -120,100 +122,97 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="roadmap" className="py-20 px-6 bg-secondary/30">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-5xl md:text-7xl font-black mb-16 text-center">
+      <section id="roadmap" className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30">
+        <div className="container mx-auto max-w-3xl">
+          <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
             ROADMAP
           </h2>
-          <div className="space-y-8">
-            <div className="flex gap-6">
+          <div className="space-y-6">
+            <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background font-bold">
+                <div className="w-10 h-10 border-4 border-primary bg-primary flex items-center justify-center text-background font-bold text-xs" style={{ boxShadow: '0 0 15px rgba(0, 255, 65, 0.6)' }}>
                   ✓
                 </div>
-                <div className="w-0.5 h-full bg-border mt-2" />
+                <div className="w-1 h-full bg-primary/30 mt-2" />
               </div>
-              <div className="pb-8">
-                <h3 className="text-2xl font-bold mb-2">Phase 1: Launch</h3>
-                <p className="text-muted-foreground">Token launch, liquidity pool creation, and initial community building</p>
+              <div className="pb-6">
+                <h3 className="text-sm md:text-base font-bold mb-2">PHASE 1</h3>
+                <p className="text-[8px] md:text-[10px] text-primary/70 leading-relaxed">LAUNCH + LIQUIDITY</p>
               </div>
             </div>
 
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background font-bold">
+                <div className="w-10 h-10 border-4 border-primary bg-background flex items-center justify-center font-bold text-xs">
                   2
                 </div>
-                <div className="w-0.5 h-full bg-border mt-2" />
+                <div className="w-1 h-full bg-primary/30 mt-2" />
               </div>
-              <div className="pb-8">
-                <h3 className="text-2xl font-bold mb-2">Phase 2: Growth</h3>
-                <p className="text-muted-foreground">CEX listings, partnerships, and expanded marketing campaigns</p>
+              <div className="pb-6">
+                <h3 className="text-sm md:text-base font-bold mb-2">PHASE 2</h3>
+                <p className="text-[8px] md:text-[10px] text-primary/70 leading-relaxed">CEX + PARTNERSHIPS</p>
               </div>
             </div>
 
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-accent/50 flex items-center justify-center text-background font-bold">
+                <div className="w-10 h-10 border-4 border-primary/50 bg-background flex items-center justify-center font-bold text-xs text-primary/50">
                   3
                 </div>
-                <div className="w-0.5 h-full bg-border mt-2" />
+                <div className="w-1 h-full bg-primary/30 mt-2" />
               </div>
-              <div className="pb-8">
-                <h3 className="text-2xl font-bold mb-2">Phase 3: Ecosystem</h3>
-                <p className="text-muted-foreground">NFT collection launch, staking platform, and community governance</p>
+              <div className="pb-6">
+                <h3 className="text-sm md:text-base font-bold mb-2 text-primary/70">PHASE 3</h3>
+                <p className="text-[8px] md:text-[10px] text-primary/50 leading-relaxed">NFT + STAKING</p>
               </div>
             </div>
 
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-accent/50 flex items-center justify-center text-background font-bold">
+                <div className="w-10 h-10 border-4 border-primary/50 bg-background flex items-center justify-center font-bold text-xs text-primary/50">
                   4
                 </div>
               </div>
               <div>
-                <h3 className="text-2xl font-bold mb-2">Phase 4: Domination</h3>
-                <p className="text-muted-foreground">Global expansion, major partnerships, and metaverse integration</p>
+                <h3 className="text-sm md:text-base font-bold mb-2 text-primary/70">PHASE 4</h3>
+                <p className="text-[8px] md:text-[10px] text-primary/50 leading-relaxed">METAVERSE</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-6">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-5xl md:text-7xl font-black mb-8">
-            JOIN THE<br />REVOLUTION
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl md:text-4xl font-bold mb-6" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
+            JOIN US
           </h2>
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Be part of the community that's redefining memecoins
+          <p className="text-[10px] md:text-xs text-primary/70 mb-10 leading-relaxed">
+            &gt; ENTER THE MATRIX &lt;
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              <Icon name="Twitter" className="mr-2" size={20} />
-              Twitter
+            <Button size="lg" className="text-[10px] px-6 py-4 bg-secondary border-4 border-primary hover:bg-primary/20" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
+              TWITTER
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              <Icon name="MessageCircle" className="mr-2" size={20} />
-              Telegram
+            <Button size="lg" className="text-[10px] px-6 py-4 bg-secondary border-4 border-primary hover:bg-primary/20" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
+              TELEGRAM
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              <Icon name="Github" className="mr-2" size={20} />
-              GitHub
+            <Button size="lg" className="text-[10px] px-6 py-4 bg-secondary border-4 border-primary hover:bg-primary/20" style={{ boxShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
+              GITHUB
             </Button>
           </div>
         </div>
       </section>
 
-      <footer className="py-12 px-6 border-t border-border">
-        <div className="container mx-auto max-w-6xl">
+      <footer className="py-8 px-4 border-t-4 border-primary/30">
+        <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-accent rounded-full" />
-              <span className="text-xl font-bold">MUDICOIN</span>
+            <div className="flex items-center space-x-3">
+              <div className="w-6 h-6 bg-primary" style={{ boxShadow: '0 0 10px rgba(0, 255, 65, 0.6)' }} />
+              <span className="text-xs font-bold">MUDICOIN</span>
             </div>
-            <p className="text-muted-foreground text-sm">
-              © 2025 MUDICOIN. All rights reserved.
+            <p className="text-[8px] text-primary/60">
+              © 2025 ALL RIGHTS RESERVED
             </p>
           </div>
         </div>
