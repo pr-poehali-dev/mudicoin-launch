@@ -1,10 +1,128 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+
+interface PixelShape {
+  id: number;
+  x: number;
+  y: number;
+  type: 'square' | 'triangle' | 'circle' | 'coin';
+  size: number;
+  speed: number;
+  rotation: number;
+}
 
 const Index = () => {
+  const [shapes, setShapes] = useState<PixelShape[]>([]);
+
+  useEffect(() => {
+    const initialShapes: PixelShape[] = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      type: ['square', 'triangle', 'circle', 'coin'][Math.floor(Math.random() * 4)] as PixelShape['type'],
+      size: Math.random() * 30 + 20,
+      speed: Math.random() * 0.3 + 0.1,
+      rotation: Math.random() * 360,
+    }));
+    setShapes(initialShapes);
+
+    const interval = setInterval(() => {
+      setShapes(prevShapes =>
+        prevShapes.map(shape => ({
+          ...shape,
+          y: (shape.y + shape.speed) % 110,
+          rotation: (shape.rotation + shape.speed * 50) % 360,
+        }))
+      );
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderShape = (shape: PixelShape) => {
+    const baseStyle = {
+      position: 'absolute' as const,
+      left: `${shape.x}%`,
+      top: `${shape.y}%`,
+      width: `${shape.size}px`,
+      height: `${shape.size}px`,
+      transform: `rotate(${shape.rotation}deg)`,
+      opacity: 0.15,
+      pointerEvents: 'none' as const,
+    };
+
+    switch (shape.type) {
+      case 'square':
+        return (
+          <div
+            key={shape.id}
+            style={{
+              ...baseStyle,
+              backgroundColor: '#00FF41',
+              border: '2px solid #00FF41',
+              boxShadow: '0 0 10px rgba(0, 255, 65, 0.3)',
+            }}
+          />
+        );
+      case 'triangle':
+        return (
+          <div
+            key={shape.id}
+            style={{
+              ...baseStyle,
+              width: 0,
+              height: 0,
+              borderLeft: `${shape.size / 2}px solid transparent`,
+              borderRight: `${shape.size / 2}px solid transparent`,
+              borderBottom: `${shape.size}px solid #00FF41`,
+              filter: 'drop-shadow(0 0 10px rgba(0, 255, 65, 0.3))',
+            }}
+          />
+        );
+      case 'circle':
+        return (
+          <div
+            key={shape.id}
+            style={{
+              ...baseStyle,
+              borderRadius: '50%',
+              backgroundColor: 'transparent',
+              border: '3px solid #00FF41',
+              boxShadow: '0 0 10px rgba(0, 255, 65, 0.3)',
+            }}
+          />
+        );
+      case 'coin':
+        return (
+          <div
+            key={shape.id}
+            style={{
+              ...baseStyle,
+              border: '4px solid #00FF41',
+              boxShadow: '0 0 15px rgba(0, 255, 65, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              color: '#00FF41',
+              fontSize: `${shape.size / 3}px`,
+            }}
+          >
+            M
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <nav className="fixed top-0 w-full z-50 bg-background border-b-4 border-primary">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {shapes.map(renderShape)}
+      </div>
+      <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b-4 border-primary">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-primary" style={{ boxShadow: '0 0 10px rgba(0, 255, 65, 0.6)' }} />
@@ -16,7 +134,7 @@ const Index = () => {
         </div>
       </nav>
 
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-32 pb-16 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center space-y-8">
             <div className="relative inline-block">
@@ -46,7 +164,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30">
+      <section className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30 relative z-10">
         <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="p-6 bg-card border-4 border-primary/50 hover:border-primary transition-colors" style={{ boxShadow: '8px 8px 0px rgba(0, 255, 65, 0.2)' }}>
@@ -82,7 +200,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="tokenomics" className="py-16 px-4">
+      <section id="tokenomics" className="py-16 px-4 relative z-10">
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
             TOKENOMICS
@@ -122,7 +240,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="roadmap" className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30">
+      <section id="roadmap" className="py-16 px-4 bg-secondary/30 border-y-4 border-primary/30 relative z-10">
         <div className="container mx-auto max-w-3xl">
           <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
             ROADMAP
@@ -182,7 +300,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 relative z-10">
         <div className="container mx-auto max-w-3xl text-center">
           <h2 className="text-2xl md:text-4xl font-bold mb-6" style={{ textShadow: '4px 4px 0px rgba(0, 255, 65, 0.3)' }}>
             JOIN US
@@ -204,7 +322,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-8 px-4 border-t-4 border-primary/30">
+      <footer className="py-8 px-4 border-t-4 border-primary/30 relative z-10">
         <div className="container mx-auto max-w-5xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-3">
